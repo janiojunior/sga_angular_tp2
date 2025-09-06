@@ -1,1 +1,60 @@
-<p>estado-form works!</p>
+<mat-card class="card">
+  <mat-card-header>
+    <mat-card-title>Cadastro de Estado</mat-card-title>
+    <mat-card-subtitle>Informe o nome e a sigla (UF)</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="grid">
+        <!-- Nome -->
+        <mat-form-field appearance="outline">
+          <mat-label>Nome</mat-label>
+          <input matInput formControlName="nome" placeholder="Ex.: Tocantins" />
+          <mat-icon matSuffix>badge</mat-icon>
+
+          @if (form.controls.nome.touched && form.controls.nome.hasError('required')) {
+            <mat-error>O nome é obrigatório.</mat-error>
+          }
+          @if (form.controls.nome.touched && form.controls.nome.hasError('minlength')) {
+            <mat-error>Digite pelo menos 3 caracteres.</mat-error>
+          }
+          @if (form.controls.nome.touched && form.controls.nome.hasError('maxlength')) {
+            <mat-hint align="end">Máx. 60 caracteres</mat-hint>
+          }
+        </mat-form-field>
+
+        <!-- Sigla -->
+        <mat-form-field appearance="outline">
+          <mat-label>Sigla (UF)</mat-label>
+          <input
+            matInput
+            formControlName="sigla"
+            maxlength="2"
+            placeholder="Ex.: TO"
+            (input)="onSiglaInput($event)"
+          />
+          <mat-icon matSuffix>flag</mat-icon>
+
+          @if (form.controls.sigla.touched && form.controls.sigla.hasError('required')) {
+            <mat-error>A sigla é obrigatória.</mat-error>
+          }
+          @if (form.controls.sigla.touched && form.controls.sigla.hasError('pattern')) {
+            <mat-error>Use exatamente 2 letras maiúsculas (A–Z).</mat-error>
+          }
+          <mat-hint align="end">{{ form.controls.sigla.value?.length ?? 0 }}/2</mat-hint>
+        </mat-form-field>
+      </div>
+
+      <div class="actions">
+        <button mat-flat-button color="primary" type="submit" [disabled]="saving()">
+          @if (!saving()) { <span>Salvar</span> } @else { <span>Salvando…</span> }
+        </button>
+
+        <button mat-stroked-button type="button" (click)="onReset()" [disabled]="saving()">
+          Limpar
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

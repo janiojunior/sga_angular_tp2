@@ -1,0 +1,54 @@
+:host {
+  display: block;
+  padding: clamp(12px, 2vw, 24px);
+}
+
+.card {
+  max-width: 760px;
+  margin-inline: auto;
+  border-radius: 18px;
+}
+
+.form {
+  display: grid;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 160px;
+  gap: 16px;
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  padding-top: 8px;
+}
+
+button[mat-flat-button] {
+  border-radius: 12px;
+  padding-inline: 18px;
+}
+
+button[mat-stroked-button] {
+  border-radius: 12px;
+}
+
+/* Pequeno reforço visual no título */
+mat-card-title {
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}

@@ -7,6 +7,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { EstadoService } from '../../../services/estado.service';
+import { Estado } from '../../../models/estado.model';
 
 
 @Component({
@@ -30,16 +32,19 @@ export class EstadoFormComponent {
   // Estado de loading só para exemplo visual
   readonly saving = signal(false);
 
-  constructor(private fb: FormBuilder, private snack: MatSnackBar) {
+  constructor(private fb: FormBuilder, 
+              private snack: MatSnackBar,
+              private estadoService: EstadoService) {
 
     this.form = this.fb.group({
+      id: [null],
       nome: this.fb.control<string>('', {
         validators: [Validators.required, Validators.minLength(3), Validators.maxLength(60)],
-        nonNullable: true
+        nonNullable: false
       }),
       sigla: this.fb.control<string>('', {
         validators: [Validators.required, Validators.pattern(/^[A-Z]{2}$/)],
-        nonNullable: true
+        nonNullable: false
       })
     });
 
@@ -62,18 +67,36 @@ export class EstadoFormComponent {
 
     this.saving.set(true);
 
-    // Simula salvamento
-    setTimeout(() => {
-      this.saving.set(false);
-      this.snack.open('Estado salvo com sucesso!', 'OK', { duration: 2500 });
-      // Aqui você poderia emitir o valor para o pai ou chamar um serviço:
-      // this.estadoService.create(this.form.getRawValue()).subscribe(...)
-      this.form.reset();
-    }, 800);
+    // Salvando o estado
+    const estado = this.form.value;
+    this.estadoService.incluir(estado).subscribe({
+      next: (obj) => {
+        this.exibirMensagem('Estado salvo com sucesso!');
+        console.log(obj);
+        this.saving.set(false);
+        this.form.reset();
+      },
+      error: (erro) => {
+         this.exibirMensagem('Problema ao salvar o estado, entre em contato com o suporte!');
+         console.log(erro);
+         this.saving.set(false);
+      }
+
+    })
+
+  }
+
+  exibirMensagem(mensagem: string): void {
+    this.snack.open(mensagem, 'OK', { 
+      duration: 2500,
+      horizontalPosition: 'center',
+      verticalPosition: 'top' 
+    });
   }
 
   onReset() {
-    this.form.reset();
+    this.form.markAsUntouched();
+     this.form.reset();  
   }
 
 }

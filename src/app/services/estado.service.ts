@@ -9,16 +9,26 @@ import { Estado } from '../models/estado.model';
 export class EstadoService {
   private baseUrl = 'http://localhost:8080/estados';
 
-  constructor(private httpClient: HttpClient) {
-
-  }
+  constructor(private httpClient: HttpClient) { }
 
   getEstados(): Observable<Estado[]> {
     return this.httpClient.get<Estado[]>(this.baseUrl);
   }
 
+  buscarPorId(id: string): Observable<Estado> {
+    return this.httpClient.get<Estado>(`${this.baseUrl}/${id}`);
+  }
+
   incluir(estado: Estado): Observable<Estado> {
     return this.httpClient.post<Estado>(this.baseUrl, estado);
+  }
+
+  alterar(estado: Estado): Observable<any> {
+    return this.httpClient.put<any>(`${this.baseUrl}/${estado.id}`, estado);
+  }
+
+  excluir(estado: Estado): Observable<any> {
+    return this.httpClient.delete<any>(`${this.baseUrl}/${estado.id}`);
   }
 
 }

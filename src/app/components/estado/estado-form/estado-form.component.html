@@ -1,11 +1,10 @@
-<mat-card class="card">
-  <mat-card-header>
-    <mat-card-title>Cadastro de Estado</mat-card-title>
-    <mat-card-subtitle>Informe o nome e a sigla (UF)</mat-card-subtitle>
-  </mat-card-header>
+<mat-toolbar class="toolbar-title">
+    Controle de Estados
+</mat-toolbar>
 
+<mat-card class="card">
   <mat-card-content>
-    <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <form class="form" [formGroup]="form">
       <div class="grid">
         <!-- Nome -->
         <mat-form-field appearance="outline">
@@ -47,13 +46,28 @@
       </div>
 
       <div class="actions">
-        <button mat-flat-button color="primary" type="submit" [disabled]="saving()">
-          @if (!saving()) { <span>Salvar</span> } @else { <span>Salvando…</span> }
+        <button 
+          mat-raised-button
+          routerLink="/estados">
+          Cancelar
         </button>
 
-        <button mat-stroked-button type="button" (click)="onReset()" [disabled]="saving()">
-          Limpar
+        <button 
+          mat-raised-button 
+          color="warn" 
+          (click)="excluir()"
+          [disabled]="!form.value.id">
+          Excluir
         </button>
+
+        <button 
+          mat-raised-button 
+          color="primary" 
+          (click)="salvar()"
+          [disabled]="form.invalid">
+          Salvar
+        </button>
+
       </div>
     </form>
   </mat-card-content>

@@ -26,21 +26,21 @@ table {
     width: 100%;
 }
 
-/* Coluna 'id' da tabela:
+/* Coluna 'numero' da tabela:
    - largura fixa de 5em
    - borda à direita
    - espaçamento interno à direita de 24px
    - texto centralizado */
-.mat-column-id {
-    width: 5em;
-    border-right: 1px solid currentColor;
-    padding-right: 24px;
+.mat-column-numero {
+    width: 1em;
+    border-right: 1px solid currentColor; 
     text-align: center;
 }
 
 /* Coluna 'nome' da tabela ocupa 58% da largura */
 .mat-column-nome {
     width: 58%;
+    white-space: nowrap; /*impede a quebra de linha*/
 }
 
 /* Coluna 'sigla' da tabela:
@@ -65,6 +65,7 @@ table {
 .mat-column-acao {
     width: 10em;
     text-align: center;
+    white-space: nowrap; /*impede a quebra de linha*/
 }
 
 /* Define o estilo do componente host (a raiz do componente Angular):

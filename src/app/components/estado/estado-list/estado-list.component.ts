@@ -17,7 +17,7 @@ import { MatIcon } from '@angular/material/icon';
   styleUrl: './estado-list.component.css'
 })
 export class EstadoListComponent implements OnInit {
-  displayedColumns: string[] = ['numero', 'nome', 'sigla', 'acao'];
+  displayedColumns: string[] = ['numero', 'nome', 'sigla', 'regiao', 'acao'];
   estados: Estado[] = [];
   dataSource = new MatTableDataSource(this.estados);
 

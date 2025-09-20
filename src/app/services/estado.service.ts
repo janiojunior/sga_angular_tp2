@@ -19,11 +19,11 @@ export class EstadoService {
     return this.httpClient.get<Estado>(`${this.baseUrl}/${id}`);
   }
 
-  incluir(estado: Estado): Observable<Estado> {
+  incluir(estado: any): Observable<Estado> {
     return this.httpClient.post<Estado>(this.baseUrl, estado);
   }
 
-  alterar(estado: Estado): Observable<any> {
+  alterar(estado: any): Observable<any> {
     return this.httpClient.put<any>(`${this.baseUrl}/${estado.id}`, estado);
   }
 

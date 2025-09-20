@@ -1,5 +1,5 @@
 
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -11,6 +11,10 @@ import { MatToolbar } from '@angular/material/toolbar';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Estado } from '../../../models/estado.model';
 import { EstadoService } from '../../../services/estado.service';
+import { MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
+import { Regiao } from '../../../models/regiao.model';
+import { RegiaoService } from '../../../services/regiao.service';
 
 
 @Component({
@@ -24,29 +28,48 @@ import { EstadoService } from '../../../services/estado.service';
     MatIconModule,
     MatSnackBarModule,
     MatToolbar,
-    RouterLink
+    RouterLink,
+    MatSelectModule,
+    MatOptionModule
 ],
   templateUrl: './estado-form.component.html',
   styleUrl: './estado-form.component.css'
 })
-export class EstadoFormComponent {
+export class EstadoFormComponent implements OnInit {
 
   readonly form; 
+  regioes: Regiao[] = [];
 
   constructor(private fb: FormBuilder, 
               private snack: MatSnackBar,
               private estadoService: EstadoService,
+              private regiaoService: RegiaoService,
               private activatedRoute: ActivatedRoute,
               private router: Router) {
+               
+      this.form = this.fb.nonNullable.group({
+        id: this.fb.control<number|null>(null),
+        nome: this.fb.control('', { validators: [Validators.required, Validators.minLength(3), Validators.maxLength(60)]}),
+        sigla: this.fb.control('', { validators:[Validators.required, Validators.pattern(/^[A-Z]{2}$/)]}),
+        idRegiao: this.fb.control<number|null>(null, {validators: [Validators.required]})
+      });
 
-    const estado: Estado = this.activatedRoute.snapshot.data['estado'];            
-
-    this.form = this.fb.group({
-      id: [(estado && estado.id) ? estado.id : null],
-      nome: [(estado && estado.nome) ? estado.nome : '', [Validators.required, Validators.minLength(3), Validators.maxLength(60)]],
-      sigla: [(estado && estado.sigla) ? estado.sigla : '',[Validators.required, Validators.pattern(/^[A-Z]{2}$/)]]
-    });
-
+      const estado: Estado = this.activatedRoute.snapshot.data['estado'];  
+      
+      if (estado) {
+        this.form.patchValue({
+          id: estado.id,
+          nome: estado.nome,
+          sigla: estado.sigla,
+          idRegiao: estado.regiao?.id
+        });
+      }
+                
+  }
+  ngOnInit(): void {
+    this.regiaoService.getRegioes().subscribe(
+      data => {this.regioes = data}
+    );
   }
 
   onSiglaInput(e: Event) {

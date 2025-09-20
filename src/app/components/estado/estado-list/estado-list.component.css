@@ -38,9 +38,9 @@ table {
     text-align: center;
 }
 
-/* Coluna 'nome' da tabela ocupa 70% da largura */
+/* Coluna 'nome' da tabela ocupa 58% da largura */
 .mat-column-nome {
-    width: 68%;
+    width: 58%;
 }
 
 /* Coluna 'sigla' da tabela:
@@ -48,6 +48,14 @@ table {
    - texto centralizado */
 .mat-column-sigla {
     width: 5em;
+    text-align: center;
+}
+
+/* Coluna 'regiao' da tabela:
+   - largura fixa de 10em
+   - texto centralizado */
+.mat-column-regiao {
+    width: 10em;
     text-align: center;
 }
 

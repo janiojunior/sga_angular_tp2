@@ -11,8 +11,25 @@ export class EstadoService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getEstados(): Observable<Estado[]> {
-    return this.httpClient.get<Estado[]>(this.baseUrl);
+  getEstados(page?: number, pageSize?: number): Observable<Estado[]> {
+    let params = {};
+
+    console.log(page !== undefined);
+    console.log(pageSize !== undefined);
+
+    if ((page !== undefined) && (pageSize !== undefined)) {
+      
+      params = {
+        page: page.toString(),
+        page_size: pageSize.toString()
+      }
+    }
+
+    console.log(this.baseUrl);
+    console.log(params);
+
+    return this.httpClient.get<Estado[]>(this.baseUrl, {params});
+    //return this.httpClient.get<Estado[]>(`${this.baseUrl}?page=${page}&pageSize=${pageSize}`);
   }
 
   buscarPorId(id: string): Observable<Estado> {
@@ -29,6 +46,10 @@ export class EstadoService {
 
   excluir(estado: Estado): Observable<any> {
     return this.httpClient.delete<any>(`${this.baseUrl}/${estado.id}`);
+  }
+
+  count(): Observable<number> {
+    return this.httpClient.get<number>(`${this.baseUrl}/count`);
   }
 
 }

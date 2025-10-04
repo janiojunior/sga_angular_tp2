@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
-import { EstadoListComponent } from './components/estado/estado-list/estado-list.component';
-import { EstadoFormComponent } from './components/estado/estado-form/estado-form.component';
-import { CidadeListComponent } from './components/cidade/cidade-list/cidade-list.component';
 import { CidadeFormComponent } from './components/cidade/cidade-form/cidade-form.component';
+import { CidadeListComponent } from './components/cidade/cidade-list/cidade-list.component';
+import { EstadoFormComponent } from './components/estado/estado-form/estado-form.component';
+import { EstadoListComponent } from './components/estado/estado-list/estado-list.component';
 import { estadoResolver } from './resolvers/estado-resolver';
 
 export const routes: Routes = [

@@ -7,20 +7,30 @@ import { estadoResolver } from './resolvers/estado-resolver';
 import { AlunoListComponent } from './components/aluno/aluno-list/aluno-list.component';
 import { AlunoFormComponent } from './components/aluno/aluno-form/aluno-form.component';
 import { alunoResolver } from './resolvers/aluno-resolver';
+import { AdminTemplateComponent } from './components/template/admin-template/admin-template.component';
 
 export const routes: Routes = [
-    { path: 'estados', component: EstadoListComponent, title: 'Lista de Estados' },
-    { path: 'estados/new', component: EstadoFormComponent, title: 'Cadastro de Estados' },
-    { path: 'estados/edit/:id', component: EstadoFormComponent, title: 'Edição de Estado', 
-        resolve: {estado: estadoResolver}
-    },
+    {
+        path: 'admin',
+        component: AdminTemplateComponent,
+        title: 'Area Administrativa',
+        children: [
+            { path: '', pathMatch: 'full', redirectTo: 'estados'},
 
-    { path: 'alunos', component: AlunoListComponent, title: 'Lista de Alunos' },
-    { path: 'alunos/new', component: AlunoFormComponent, title: 'Cadastro de Alunos' },
-    { path: 'alunos/edit/:id', component: AlunoFormComponent, title: 'Edição de Aluno', 
-        resolve: {aluno: alunoResolver}
-    },
+            { path: 'estados', component: EstadoListComponent, title: 'Lista de Estados' },
+            { path: 'estados/new', component: EstadoFormComponent, title: 'Cadastro de Estados' },
+            { path: 'estados/edit/:id', component: EstadoFormComponent, title: 'Edição de Estado', 
+                resolve: {estado: estadoResolver}
+            },
 
-    { path: 'cidades', component: CidadeListComponent, title: 'Lista de Cidades' },
-    { path: 'cidades/new', component: CidadeFormComponent, title: 'Cadastro de Cidades' }
+            { path: 'alunos', component: AlunoListComponent, title: 'Lista de Alunos' },
+            { path: 'alunos/new', component: AlunoFormComponent, title: 'Cadastro de Alunos' },
+            { path: 'alunos/edit/:id', component: AlunoFormComponent, title: 'Edição de Aluno', 
+                resolve: {aluno: alunoResolver}
+            },
+
+            { path: 'cidades', component: CidadeListComponent, title: 'Lista de Cidades' },
+            { path: 'cidades/new', component: CidadeFormComponent, title: 'Cadastro de Cidades' }
+        ]
+    }
 ];

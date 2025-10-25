@@ -8,6 +8,7 @@ import { AlunoListComponent } from './components/aluno/aluno-list/aluno-list.com
 import { AlunoFormComponent } from './components/aluno/aluno-form/aluno-form.component';
 import { alunoResolver } from './resolvers/aluno-resolver';
 import { AdminTemplateComponent } from './components/template/admin-template/admin-template.component';
+import { PlanoCardListComponent } from './components/plano/plano-card-list/plano-card-list.component';
 
 export const routes: Routes = [
     {
@@ -32,5 +33,7 @@ export const routes: Routes = [
             { path: 'cidades', component: CidadeListComponent, title: 'Lista de Cidades' },
             { path: 'cidades/new', component: CidadeFormComponent, title: 'Cadastro de Cidades' }
         ]
-    }
+    },
+
+    {path: 'planos', component: PlanoCardListComponent, title: 'Card de Planos'},
 ];

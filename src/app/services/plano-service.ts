@@ -45,5 +45,9 @@ private baseUrl = 'http://localhost:8080/planos';
     return this.httpClient.get<number>(`${this.baseUrl}/count`);
   }
 
+  getUrlImage(nomeImagem: string|null|undefined): string {
+    return `${this.baseUrl}/image/download/${nomeImagem}`;
+  }
+
 }
 

@@ -5,4 +5,5 @@ export class Plano {
   maxProfessores?: number|null;
   precoMensal?: number|null;
   descontoAnual?: number|null;
+  nomeImagem?: string|null;
 }

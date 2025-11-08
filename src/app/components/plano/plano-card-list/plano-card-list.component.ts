@@ -56,7 +56,7 @@ export class PlanoCardListComponent implements OnInit {
       maxAlunos: p.maxAlunos,
       maxProfessores: p.maxProfessores,
       descontoAnual: p.descontoAnual,
-      imagemUrl: 'assets/img/planos/default.png'
+      imagemUrl: p.nomeImagem ? this.planoService.getUrlImage(p.nomeImagem) : 'assets/img/planos/default.png'
     }));
     this.cards.set(list);
   }

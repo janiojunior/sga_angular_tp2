@@ -1,16 +1,33 @@
 import { Routes } from '@angular/router';
+import { AlunoFormComponent } from './components/aluno/aluno-form/aluno-form.component';
+import { AlunoListComponent } from './components/aluno/aluno-list/aluno-list.component';
+import { CarrinhoComponent } from './components/carrinho/carrinho.component';
 import { CidadeFormComponent } from './components/cidade/cidade-form/cidade-form.component';
 import { CidadeListComponent } from './components/cidade/cidade-list/cidade-list.component';
 import { EstadoFormComponent } from './components/estado/estado-form/estado-form.component';
 import { EstadoListComponent } from './components/estado/estado-list/estado-list.component';
-import { estadoResolver } from './resolvers/estado-resolver';
-import { AlunoListComponent } from './components/aluno/aluno-list/aluno-list.component';
-import { AlunoFormComponent } from './components/aluno/aluno-form/aluno-form.component';
-import { alunoResolver } from './resolvers/aluno-resolver';
-import { AdminTemplateComponent } from './components/template/admin-template/admin-template.component';
 import { PlanoCardListComponent } from './components/plano/plano-card-list/plano-card-list.component';
+import { AdminTemplateComponent } from './components/template/admin-template/admin-template.component';
+import { UserTemplateComponent } from './components/template/user-template/user-template.component';
+import { alunoResolver } from './resolvers/aluno-resolver';
+import { estadoResolver } from './resolvers/estado-resolver';
+import { LoginComponent } from './components/login/login.component';
 
 export const routes: Routes = [
+
+    {
+        path: '',
+        component: UserTemplateComponent,
+        title: 'e-Commerce',
+        children: [
+            {path: '', pathMatch: 'full', redirectTo: 'planos'},
+
+            {path: 'planos', component: PlanoCardListComponent, title: 'Card de Planos'},
+            {path: 'carrinho', component: CarrinhoComponent, title: 'Carrinho'},
+            {path: 'login', component: LoginComponent, title: 'Login'},
+        ]
+    }, 
+
     {
         path: 'admin',
         component: AdminTemplateComponent,
@@ -34,6 +51,4 @@ export const routes: Routes = [
             { path: 'cidades/new', component: CidadeFormComponent, title: 'Cadastro de Cidades' }
         ]
     },
-
-    {path: 'planos', component: PlanoCardListComponent, title: 'Card de Planos'},
 ];

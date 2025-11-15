@@ -1,15 +1,16 @@
+import { CurrencyPipe, DecimalPipe, NgFor, NgIf } from '@angular/common';
 import { Component, OnInit, signal } from '@angular/core';
-import { Plano } from '../../../models/plano.model';
-import { MatCardModule } from '@angular/material/card';
-import { NgFor, NgIf, DecimalPipe, CurrencyPipe } from '@angular/common';
 import { MatButton } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Plano } from '../../../models/plano.model';
 import { PlanoService } from '../../../services/plano-service';
+import { CarrinhoService } from '../../../services/carrinho.service';
 
 type CardPlano = {
-  idPlano?: number;
-  titulo?: string|null;
-  preco?: number|null;
+  idPlano: number;
+  titulo: string;
+  preco: number;
   maxAlunos?: number|null;
   maxProfessores?: number|null;
   descontoAnual?: number|null;
@@ -19,7 +20,7 @@ type CardPlano = {
 @Component({
   selector: 'app-plano-card-list',
   standalone: true,
-  imports: [MatCardModule, NgFor, NgIf, MatButton, DecimalPipe, CurrencyPipe],
+  imports: [MatCardModule, MatButton, CurrencyPipe],
   templateUrl: './plano-card-list.component.html',
   styleUrls: ['./plano-card-list.component.css']
 })
@@ -30,7 +31,8 @@ export class PlanoCardListComponent implements OnInit {
 
   constructor(
     private planoService: PlanoService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private carrinhoService: CarrinhoService
   ) {}
 
   ngOnInit(): void {
@@ -62,8 +64,14 @@ export class PlanoCardListComponent implements OnInit {
   }
 
   adicionarAoCarrinho(card: CardPlano): void {
-    this.showSnackbarTopPosition(`O Plano (${card.titulo}) foi adicionado ao carrinho.`);
-
+    this.showSnackbarTopPosition('O Plano ('+ card.titulo + ') foi adicionado ao carrinho.');
+    console.log('itemExistente: ');
+    this.carrinhoService.adicionar({
+      id: card.idPlano,
+      nome: card.titulo,
+      preco: card.preco,
+      quantidade: 1
+    });
   }
 
   showSnackbarTopPosition(content: string): void {

@@ -12,6 +12,7 @@ import { UserTemplateComponent } from './components/template/user-template/user-
 import { alunoResolver } from './resolvers/aluno-resolver';
 import { estadoResolver } from './resolvers/estado-resolver';
 import { LoginComponent } from './components/login/login.component';
+import { authGuard } from './guard/auth.guard';
 
 export const routes: Routes = [
 
@@ -19,12 +20,13 @@ export const routes: Routes = [
         path: '',
         component: UserTemplateComponent,
         title: 'e-Commerce',
+        canActivate: [authGuard],
         children: [
             {path: '', pathMatch: 'full', redirectTo: 'planos'},
 
-            {path: 'planos', component: PlanoCardListComponent, title: 'Card de Planos'},
-            {path: 'carrinho', component: CarrinhoComponent, title: 'Carrinho'},
-            {path: 'login', component: LoginComponent, title: 'Login'},
+            {path: 'planos', component: PlanoCardListComponent,  title: 'Card de Planos', data: {public: true}},
+            {path: 'carrinho', component: CarrinhoComponent, title: 'Carrinho', data: {public: true}},
+            {path: 'login', component: LoginComponent, title: 'Login', data: {public: true}},
         ]
     }, 
 
@@ -32,6 +34,7 @@ export const routes: Routes = [
         path: 'admin',
         component: AdminTemplateComponent,
         title: 'Area Administrativa',
+        canActivate: [authGuard],
         children: [
             { path: '', pathMatch: 'full', redirectTo: 'estados'},
 

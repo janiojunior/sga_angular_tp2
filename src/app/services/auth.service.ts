@@ -17,9 +17,9 @@ export class AuthService {
   private usuarioLogadoKey = 'usuario_logado';
   private usuarioLogadoSubject = new BehaviorSubject<Usuario | null>(null);
 
-  constructor(private http: HttpClient, 
-              private localStorageService: LocalStorageService, 
-              private jwtHelper: JwtHelperService) {
+  constructor(private http: HttpClient,
+    private localStorageService: LocalStorageService,
+    private jwtHelper: JwtHelperService) {
 
     this.initUsuarioLogado();
 
@@ -42,7 +42,7 @@ export class AuthService {
       senha: senha
     }
 
-    return this.http.post(`${this.baseURL}`, params, {observe: 'response'}).pipe (
+    return this.http.post(`${this.baseURL}`, params, { observe: 'response' }).pipe(
       tap((res: any) => {
         const authToken = res.headers.get('Authorization') ?? '';
         if (authToken) {
@@ -98,6 +98,11 @@ export class AuthService {
       return true;
     }
 
+  }
+
+  logout(): void {
+    this.removeToken();
+    this.removeUsuarioLogado();
   }
 
 }
